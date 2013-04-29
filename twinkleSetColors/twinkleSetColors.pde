@@ -11,6 +11,8 @@ int backgroundEnabled = 1; // the background color will be "no sound"
 int trainingDelay = 200;
 String colors[] = new String[howManyNotes];
 Boolean noData = false;
+int brightToggle = 5;
+boolean off = false;
 
 
 
@@ -109,7 +111,7 @@ void setup() {
     }
   }
 
-  //println(noData);
+  println(noData);
 
   String[] cameras = Capture.list();
   //println(cameras);
@@ -379,12 +381,19 @@ void draw()
     //avgHue = (avgHue + currentHue) / 2.0;
     avgHue = currentHue;
     currentBrightness = brightness(c);
+    println(currentBrightness);
     avgBrightness = (avgBrightness + currentBrightness) / 2.0;
     image(video, 0, 0); 
     colorMode(HSB);
     fill(avgHue, 255, avgBrightness, 200);
     translate(width/2.0, height/2.0);
     ellipse(0, 0, 50, 50);
+    
+    if (currentBrightness < brightToggle){
+     off = true; 
+    }else{
+     off = false; 
+    }
 
 
 
@@ -393,7 +402,7 @@ void draw()
       sine1.setAmp(1);
       sine1.setFreq(majorScaleFreqs[training+14]);
     }
-    else
+    else if(training>howManyNotes || off == false)
     {
       int note=calcClosest(rtrained, gtrained, btrained, meanr, meang, meanb, howManyNotes);
       freq=majorScaleFreqs[14+note];
