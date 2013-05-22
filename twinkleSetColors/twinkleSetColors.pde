@@ -2,15 +2,19 @@
 /////////////////////////////////////////
 ////////////// controls /////////////////
 /////////////////////////////////////////
-int howManyNotes = 3;
+int howManyNotes = 8;
 public static final int radiusOfCircleSquared = 25;
 int[] majorScaleMask = {
   1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1
 };
 int backgroundEnabled = 1; // the background color will be "no sound"
 int trainingDelay = 200;
+
+//Save colors
 String colors[] = new String[howManyNotes];
 Boolean noData = false;
+
+//set toggle for off
 int brightToggle = 5;
 boolean off = false;
 
@@ -114,15 +118,18 @@ void setup() {
   println(noData);
 
   String[] cameras = Capture.list();
-  //println(cameras);
+  println(cameras);
 
   training=0;
+  
+  // makes array of 157 gets filled up?
   rpix = new int[int(PI*radiusOfCircleSquared*2)];
   gpix = new int[int(PI*radiusOfCircleSquared*2)];
   bpix = new int[int(PI*radiusOfCircleSquared*2)];
+  
 
   //try{
-  video = new Capture(this, cameras[21]);
+  video = new Capture(this, cameras[22]);
   //}catch{
 
   //}
@@ -208,7 +215,7 @@ void setup() {
 
 int calcClosest(float[] rr, float[] gg, float[] bb, float r, float g, float b, int tot)
 {
-  float minDist=10000000; // 10 million is more than 255*255*3, so initialized high
+  float minDist=1000000; // 10 million is more than 255*255*3, so initialized high
   float currDist;
   int minIndex=-1;
   float rdif;
@@ -226,14 +233,23 @@ int calcClosest(float[] rr, float[] gg, float[] bb, float r, float g, float b, i
     bdif=bb[i]-b;
     b2=bdif*bdif;
     currDist=r2+g2+b2;
+ 
+    //println(currDist);
+
+    //println(minDist);
+    
+    
     if (currDist<minDist)
     {
+      //println("currDist");
       minDist=currDist;
       minIndex=i;
     }
   }
+
   minDist=sqrt(minDist);
-  //  println(minDist);
+  //println(minIndex);
+
   if (minDist<100)
   {
     return minIndex;
@@ -290,6 +306,7 @@ void draw()
   video.loadPixels();
   image(video, 0, 0); 
   trainingFlag=0;
+
   if ((keyPressed)&&(training<howManyNotes))
   {
     delay(trainingDelay);
@@ -300,12 +317,12 @@ void draw()
   if ((training>(howManyNotes-1))||(trainingFlag==1) || (noData == false))
   {
 
-    if (training == howManyNotes-1) {
+    if ((training == howManyNotes-1) && (noData == true) ) {
       saveStrings("data/data.txt", colors);
       println("saved");
     }
-    
-    
+
+
     int r = 0;
     int g = 0;
     int b = 0;
@@ -351,7 +368,7 @@ void draw()
     float stdb=std(bpix, loopCount, meanb);
     float stdg=std(gpix, loopCount, meang);
 
-    if (training<howManyNotes && (noData))
+    if (training<howManyNotes-1 && (noData))
     {
       println(training);
       //train(meanr, meanb, meang, stdr, stdb, stdg, training-1);  
@@ -366,33 +383,36 @@ void draw()
       print(meanb);
       println(" ");
 
-  if (training<howManyNotes-1){
-      colors[training] = Float.toString(meanr) + "," + Float.toString(meang) + "," + Float.toString(meanb);
-  }  
-  }
+      if (training<howManyNotes-1) {
+        colors[training] = Float.toString(meanr) + "," + Float.toString(meang) + "," + Float.toString(meanb);
+      }
+    }
 
 
     r = int(r / (nAvg*nAvg));
     g = int(g / (nAvg*nAvg));
     b = int(b / (nAvg*nAvg));
+
+
     colorMode(RGB);
     color c = color(r, g, b);
     currentHue = hue(c);
     //avgHue = (avgHue + currentHue) / 2.0;
     avgHue = currentHue;
     currentBrightness = brightness(c);
-    println(currentBrightness);
+    //println(currentBrightness);
     avgBrightness = (avgBrightness + currentBrightness) / 2.0;
     image(video, 0, 0); 
     colorMode(HSB);
     fill(avgHue, 255, avgBrightness, 200);
     translate(width/2.0, height/2.0);
     ellipse(0, 0, 50, 50);
-    
-    if (currentBrightness < brightToggle){
-     off = true; 
-    }else{
-     off = false; 
+
+    if (currentBrightness < brightToggle) {
+      off = true;
+    }
+    else {
+      off = false;
     }
 
 
@@ -402,7 +422,7 @@ void draw()
       sine1.setAmp(1);
       sine1.setFreq(majorScaleFreqs[training+14]);
     }
-    else if(training>howManyNotes || off == false)
+    else if (training>howManyNotes || off == false)
     {
       int note=calcClosest(rtrained, gtrained, btrained, meanr, meang, meanb, howManyNotes);
       freq=majorScaleFreqs[14+note];
@@ -448,7 +468,7 @@ void draw()
     //      freq = majorScaleFreqs[int(map(avgHue, 0, 255, 14, 22))]; 
     //println(currentHue);
     training++;
-   // println(training);
+    // println(training);
   }
 }
 

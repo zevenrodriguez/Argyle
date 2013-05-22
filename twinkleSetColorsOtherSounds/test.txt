@@ -1,0 +1,30 @@
+name=FaceTime HD Camera (Built-in),size=1280x720,fps=30
+name=FaceTime HD Camera (Built-in),size=1280x720,fps=15
+name=FaceTime HD Camera (Built-in),size=1280x720,fps=1
+name=FaceTime HD Camera (Built-in),size=640x360,fps=30
+name=FaceTime HD Camera (Built-in),size=640x360,fps=15
+name=FaceTime HD Camera (Built-in),size=640x360,fps=1
+name=FaceTime HD Camera (Built-in),size=320x180,fps=30
+name=FaceTime HD Camera (Built-in),size=320x180,fps=15
+name=FaceTime HD Camera (Built-in),size=320x180,fps=1
+name=FaceTime HD Camera (Built-in),size=160x90,fps=30
+name=FaceTime HD Camera (Built-in),size=160x90,fps=15
+name=FaceTime HD Camera (Built-in),size=160x90,fps=1
+name=FaceTime HD Camera (Built-in),size=80x45,fps=30
+name=FaceTime HD Camera (Built-in),size=80x45,fps=15
+name=FaceTime HD Camera (Built-in),size=80x45,fps=1
+name=Rocketfish HD Webcam,size=1600x1200,fps=30
+name=Rocketfish HD Webcam,size=1600x1200,fps=15
+name=Rocketfish HD Webcam,size=1600x1200,fps=1
+name=Rocketfish HD Webcam,size=800x600,fps=30
+name=Rocketfish HD Webcam,size=800x600,fps=15
+name=Rocketfish HD Webcam,size=800x600,fps=1
+name=Rocketfish HD Webcam,size=400x300,fps=30
+name=Rocketfish HD Webcam,size=400x300,fps=15
+name=Rocketfish HD Webcam,size=400x300,fps=1
+name=Rocketfish HD Webcam,size=200x150,fps=30
+name=Rocketfish HD Webcam,size=200x150,fps=15
+name=Rocketfish HD Webcam,size=200x150,fps=1
+name=Rocketfish HD Webcam,size=100x75,fps=30
+name=Rocketfish HD Webcam,size=100x75,fps=15
+name=Rocketfish HD Webcam,size=100x75,fps=1
